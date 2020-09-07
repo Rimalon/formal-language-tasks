@@ -36,12 +36,16 @@ identity_matrix = Matrix.from_lists(
 
 class PygraphblasTestCase(unittest.TestCase):
     def test_non_zero_matrix_product(self):
+        for line in first_matrix & second_matrix:
+            print(line)
         self.assertTrue(result_matrix.iseq(first_matrix & second_matrix))
 
     def test_zero_matrix_product(self):
         self.assertTrue(zero_matrix.iseq(first_matrix & zero_matrix))
 
     def test_identity_matrix_product(self):
+        for line in first_matrix & identity_matrix:
+            print(line)
         self.assertTrue(first_matrix.iseq(first_matrix & identity_matrix))
 
 

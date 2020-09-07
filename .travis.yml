@@ -4,7 +4,7 @@ python:
 install:
   - wget -O conda_install.sh https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh
   - bash conda_install.sh -b -p $HOME/miniconda
-  - export PATH="$HOME/miniconda/etc/profile.d:$PATH"
+  - source "$HOME/miniconda/etc/profile.d/conda.sh"
   - conda env create -f environment.yml
   - conda activate formal-language-env
 

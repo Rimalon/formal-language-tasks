@@ -7,7 +7,12 @@ install:
   - source "$HOME/miniconda/etc/profile.d/conda.sh"
   - conda env create -f environment.yml
   - conda activate formal-language-env
+  - pwd
+  - ls
 
-script:
-  - src/pyformlangTest.py
-  - src/pygraphblasTest.py
+jobs:
+  include:
+    - stage: test
+      script:
+      - ./src/tests/pyformlangTest.py
+      - ./src/tests/pygraphblasTest.py

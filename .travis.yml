@@ -3,8 +3,7 @@ python:
   - "3.8"
 install:
   - wget -O conda_install.sh https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh
-  - sh conda_install.sh
-  - exit
+  - bash conda_install.sh
   - conda env create -f environment.yml
   - conda activate formal-language-env
 

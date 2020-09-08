@@ -7,8 +7,6 @@ install:
   - source "$HOME/miniconda/etc/profile.d/conda.sh"
   - conda env create -f environment.yml
   - conda activate formal-language-env
-  - pwd
-  - ls
 
 jobs:
   include:

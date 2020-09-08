@@ -1,6 +1,14 @@
 # Formal-language-tasks
 This repository contains solutions to tasks from the course of the theory of formal languages of St. Petersburg State University in 2020
 ____
+## Installation:
+This project uses miniconda to download and install packages, if you don't have it installed, the installation script will download and install it itself.
+
+To run the installation script, execute the command:
+```
+bash install.sh
+```
+____
 ## Build status: 
 master: [![Build Status](https://travis-ci.com/Rimalon/formal-language-tasks.svg?branch=master)](https://travis-ci.com/Rimalon/formal-language-tasks)
 

@@ -3,7 +3,7 @@ import unittest
 from pyformlang.regular_expression import Regex
 from src.classes import Graph
 
-test_resources_path = 'tests/resources/'
+test_resources_path = '/home/travis/build/Rimalon/formal-language-tasks/src/tests/resources/'
 
 
 class GraphTestCase(unittest.TestCase):

@@ -1,8 +1,10 @@
 import unittest
 
 from pyformlang.regular_expression import Regex
-from src.main.classes import Graph
+from src.main.classes.Graph import Graph
+import sys
 
+sys.path.insert(0, '/src/main')
 
 test_resources_path = 'tests/resources/'
 
@@ -21,8 +23,7 @@ class GraphTestCase(unittest.TestCase):
         for label, matrix in graph.label_matrices.items():
             for i in range(len(matrix.rows)):
                 for j in range(len(matrix.cols)):
-                    self.assertEqual((i == 0 & j == 1 & label == 'a') | (i == 0 & j == 2 & label == 'b'), matrix[i,j])
-
+                    self.assertEqual((i == 0 & j == 1 & label == 'a') | (i == 0 & j == 2 & label == 'b'), matrix[i, j])
 
 
 if __name__ == '__main__':

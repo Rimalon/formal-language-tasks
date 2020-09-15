@@ -11,11 +11,9 @@ bash install.sh
 ____
 ## Build status: 
 master: [![Build Status](https://travis-ci.com/Rimalon/formal-language-tasks.svg?branch=master)](https://travis-ci.com/Rimalon/formal-language-tasks)
-
-Task 1 branch: [![Build Status](https://travis-ci.com/Rimalon/formal-language-tasks.svg?branch=fl_task1_adding_base_libs)](https://travis-ci.com/Rimalon/formal-language-tasks)
 ____
 ## Tasks status:
-:black_square_button: Task 1
+:yellow_square: Task 1
 
 :black_square_button: Task 2
 

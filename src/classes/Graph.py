@@ -1,4 +1,4 @@
-from pyformlang.finite_automaton import DeterministicFiniteAutomaton, State
+from pyformlang.finite_automaton import DeterministicFiniteAutomaton, State, Symbol
 from pygraphblas import Matrix, BOOL
 from pyformlang.regular_expression import Regex
 
@@ -18,7 +18,7 @@ class Graph:
             for i in range(matrix.nrows):
                 for j in range(matrix.ncols):
                     if self.label_matrices[label][i, j]:
-                        result.add_transition(State(i), label, State(j))
+                        result.add_transition(State(i), Symbol(label), State(j))
         return result
 
     def to_regex(self):
@@ -44,7 +44,7 @@ def from_file(path: str):
     for t in transitions:
         fr, label, to = t.split(' ')
         if label not in result.label_matrices.keys():
-            result.label_matrices[label] = Matrix.sparse(BOOL, len(result.vertice_numbering_dictionary),
+            result.label_matrices[label] = Matrix.dense(BOOL, len(result.vertice_numbering_dictionary),
                                                          len(result.vertice_numbering_dictionary))
         result.label_matrices[label][result.vertice_numbering_dictionary[fr], result.vertice_numbering_dictionary[to]] = True
 
@@ -70,8 +70,7 @@ def from_dfa(dfa: DeterministicFiniteAutomaton):
     for fr, label, to in dfa._transition_function.get_edges():
         print(fr, ' ', label, ' ', to)
         if label not in result.label_matrices.keys():
-            result.label_matrices[label] = Matrix.sparse(BOOL, len(result.vertice_numbering_dictionary),
-                                                         len(result.vertice_numbering_dictionary))
+            result.label_matrices[label] = Matrix.dense(BOOL, len(result.vertice_numbering_dictionary), len(result.vertice_numbering_dictionary))
         result.label_matrices[label][result.vertice_numbering_dictionary[fr], result.vertice_numbering_dictionary[to]] = True
 
     for fs in dfa.final_states:

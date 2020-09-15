@@ -71,7 +71,7 @@ def from_dfa(dfa: DeterministicFiniteAutomaton):
         if label not in result.label_matrices.keys():
             result.label_matrices[label] = Matrix.sparse(BOOL, len(result.vertice_numbering_dictionary),
                                                          len(result.vertice_numbering_dictionary))
-        result.label_matrices[label][int(fr), int(to)] = True
+        result.label_matrices[label][int(str(fr)), int(str(to))] = True
 
     for fs in dfa.final_states:
         result.final_vertices.add(result.vertice_numbering_dictionary[fs])

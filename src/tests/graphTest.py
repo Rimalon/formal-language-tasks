@@ -18,8 +18,8 @@ class GraphTestCase(unittest.TestCase):
     def test_from_file(self):
         graph = Graph.from_file(test_resources_path + 'graph_a_or_b.txt')
         for label, matrix in graph.label_matrices.items():
-            for i in range(len(matrix.rows)):
-                for j in range(len(matrix.cols)):
+            for i in range(matrix.nrows):
+                for j in range(matrix.ncols):
                     self.assertEqual((i == 0 & j == 1 & label == 'a') | (i == 0 & j == 2 & label == 'b'), matrix[i, j])
 
 

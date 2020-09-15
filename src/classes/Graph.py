@@ -15,8 +15,8 @@ class Graph:
                                               start_state=State(self.start_vertice),
                                               final_states=set(map(lambda x: State(x), self.final_vertices)))
         for label, matrix in self.label_matrices.items():
-            for i in range(len(matrix.rows)):
-                for j in range(len(matrix.cols)):
+            for i in range(matrix.nrows):
+                for j in range(matrix.ncols):
                     if self.label_matrices[label][i, j]:
                         result.add_transition(State(i), label, State(j))
         return result
@@ -56,7 +56,7 @@ def from_regex_file(path: str):
     regex = Regex(file.readline())
     file.close()
     dfa: DeterministicFiniteAutomaton = regex.to_epsilon_nfa().to_deterministic().minimize()
-    return cls.from_dfa(dfa)
+    return from_dfa(dfa)
 
 
 def from_dfa(dfa: DeterministicFiniteAutomaton):

@@ -1,7 +1,7 @@
 import unittest
 
 from pyformlang.regular_expression import Regex
-from src.main.classes.Graph import Graph
+from src.main.classes import Graph
 
 
 test_resources_path = 'tests/resources/'

@@ -14,3 +14,4 @@ jobs:
       script:
       - python ./src/tests/pyformlangTest.py
       - python ./src/tests/pygraphblasTest.py
+      - python ./src/tests/graphTest.py

@@ -1,0 +1,10 @@
+name: formal-language-env
+channels:
+  - conda-forge
+  - defaults
+dependencies:
+  - python=3.8.5
+  - pip=20.2.2
+  - pygraphblas=3.4.0
+  - pip:
+    - pyformlang==0.1.20

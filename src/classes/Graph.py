@@ -17,63 +17,64 @@ class Graph:
         for label, matrix in self.label_matrices.items():
             for i in range(len(matrix.rows)):
                 for j in range(len(matrix.cols)):
-                    if self.label_matrices[label][i,j]:
+                    if self.label_matrices[label][i, j]:
                         result.add_transition(State(i), label, State(j))
         return result
 
     def to_regex(self):
         return self.to_dfa().to_regex()
 
-    @classmethod
-    def from_file(cls, path: str):
-        file = open(path)
-        transitions = file.read().split('\n')
-        file.close()
-        result = Graph()
-        for t in transitions:
-            fr, label, to = t.split(' ')
-            i = 0
-            if fr not in result.vertice_numbering_dictionary.keys():
-                result.vertice_numbering_dictionary[fr] = i
-                i += 1
 
-            if to not in result.vertice_numbering_dictionary.keys():
-                result.vertice_numbering_dictionary[to] = i
-                i += 1
+def from_file(path: str):
+    file = open(path)
+    transitions = file.read().split('\n')
+    file.close()
+    result = Graph()
+    for t in transitions:
+        fr, label, to = t.split(' ')
+        i = 0
+        if fr not in result.vertice_numbering_dictionary.keys():
+            result.vertice_numbering_dictionary[fr] = i
+            i += 1
 
-        for t in transitions:
-            fr, label, to = t.split(' ')
-            if label not in result.label_matrices.keys():
-                result.label_matrices[label] = Matrix.sparse(BOOL, len(result.vertice_numbering_dictionary), len(result.vertice_numbering_dictionary))
-            result.label_matrices[label][int(fr), int(to)] = True
+        if to not in result.vertice_numbering_dictionary.keys():
+            result.vertice_numbering_dictionary[to] = i
+            i += 1
 
-        return result
+    for t in transitions:
+        fr, label, to = t.split(' ')
+        if label not in result.label_matrices.keys():
+            result.label_matrices[label] = Matrix.sparse(BOOL, len(result.vertice_numbering_dictionary),
+                                                         len(result.vertice_numbering_dictionary))
+        result.label_matrices[label][int(fr), int(to)] = True
 
-    @classmethod
-    def from_regex_file(cls, path: str):
-        file = open(path)
-        regex = Regex(file.readline())
-        file.close()
-        dfa: DeterministicFiniteAutomaton = regex.to_epsilon_nfa().to_deterministic().minimize()
-        return cls.from_dfa(dfa)
+    return result
 
-    @classmethod
-    def from_dfa(cls, dfa: DeterministicFiniteAutomaton):
-        result = Graph()
-        for s in dfa.states:
-            i = 0
-            if s not in result.vertice_numbering_dictionary.keys():
-                result.vertice_numbering_dictionary[s] = i
-                i += 1
 
-        for fr, label, to in dfa._transition_function.get_edges():
-            if label not in result.label_matrices.keys():
-                result.label_matrices[label] = Matrix.sparse(BOOL, len(result.vertice_numbering_dictionary),
-                                                             len(result.vertice_numbering_dictionary))
-            result.label_matrices[label][int(fr), int(to)] = True
+def from_regex_file(path: str):
+    file = open(path)
+    regex = Regex(file.readline())
+    file.close()
+    dfa: DeterministicFiniteAutomaton = regex.to_epsilon_nfa().to_deterministic().minimize()
+    return cls.from_dfa(dfa)
 
-        for fs in dfa.final_states:
-            result.final_vertices.add(result.vertice_numbering_dictionary[fs])
 
-        result.start_vertice = result.vertice_numbering_dictionary[dfa.start_state]
-        return result
+def from_dfa(dfa: DeterministicFiniteAutomaton):
+    result = Graph()
+    for s in dfa.states:
+        i = 0
+        if s not in result.vertice_numbering_dictionary.keys():
+            result.vertice_numbering_dictionary[s] = i
+            i += 1
+
+    for fr, label, to in dfa._transition_function.get_edges():
+        if label not in result.label_matrices.keys():
+            result.label_matrices[label] = Matrix.sparse(BOOL, len(result.vertice_numbering_dictionary),
+                                                         len(result.vertice_numbering_dictionary))
+        result.label_matrices[label][int(fr), int(to)] = True
+
+    for fs in dfa.final_states:
+        result.final_vertices.add(result.vertice_numbering_dictionary[fs])
+
+    result.start_vertice = result.vertice_numbering_dictionary[dfa.start_state]
+    return result

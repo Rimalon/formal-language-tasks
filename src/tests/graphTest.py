@@ -5,6 +5,8 @@ from src.main.classes.Graph import Graph
 
 
 test_resources_path = 'tests/resources/'
+
+
 class GraphTestCase(unittest.TestCase):
     def test_from_regex_to_regex(self):
         regex_path = test_resources_path + 'regex_a_or_b.txt'

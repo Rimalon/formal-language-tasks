@@ -68,7 +68,6 @@ def from_dfa(dfa: DeterministicFiniteAutomaton):
             i += 1
 
     for fr, label, to in dfa._transition_function.get_edges():
-        print(fr, ' ', label, ' ', to)
         if label not in result.label_matrices.keys():
             result.label_matrices[label] = Matrix.dense(BOOL, len(result.vertice_numbering_dictionary), len(result.vertice_numbering_dictionary))
         result.label_matrices[label][result.vertice_numbering_dictionary[fr], result.vertice_numbering_dictionary[to]] = True

@@ -64,7 +64,7 @@ def execute_query(args):
                                None if args.to is None else read_vertices_set_from_file(args.to))
 
 
-def filter_query_result(matrix: Matrix, fr: set = None, to: set = None):
+def filter_query_result(matrix: Matrix, fr: set = None, to: set = None) -> Matrix:
     result = Matrix.dense(BOOL, matrix.nrows, matrix.ncols)
     for i in range(matrix.nrows):
         for j in range(matrix.ncols):

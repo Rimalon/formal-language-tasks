@@ -11,7 +11,8 @@ if __name__ == '__main__':
                         type=str, help='path to file with start vertices\nfile format:\n0 1 2')
     parser.add_argument('--to', required=False, default=None,
                         type=str, help='path to file with end vertices\nfile format:\n0 1 2')
-
-    print(parser.usage)
     args = parser.parse_args()
-    print(execute_query(args))
+    query_result = execute_query(args)
+    for i in range(query_result.nrows):
+        for j in range(query_result.ncols):
+            print(j, ' reachable from ', i)

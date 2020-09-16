@@ -4,15 +4,39 @@ from pyformlang.regular_expression import Regex
 
 
 class Graph:
-    def __init__(self):
+    def __init__(self, vertices_amount=0):
         self.label_matrices = dict()
         self.vertice_numbering_dictionary = dict()
-        self.start_vertice = None
+        self.vertices_amount = vertices_amount
+        self.start_vertices = set()
         self.final_vertices = set()
+
+    def __getitem__(self, item) -> Matrix:
+        if item not in self.label_matrices.keys():
+            self.label_matrices[item] = Matrix.dense(BOOL, self.vertices_amount, self.vertices_amount)
+        return self.label_matrices[item]
+
+    def __and__(self, other):
+        return self.get_intersection(other)
+
+    def get_intersection(self, other: "Graph"):
+        result = Graph(self.vertices_amount * other.vertices_amount)
+        for i in self.start_vertices:
+            for j in other.start_vertices:
+                result.start_vertices.add(i * self.vertices_amount + j)
+
+        for i in self.final_vertices:
+            for j in other.final_vertices:
+                result.final_vertices.add(i * self.vertices_amount + j)
+
+        for label in self.label_matrices.keys():
+            result.label_matrices[label] = self[label].kronecker(other[label])
+
+        return result
 
     def to_dfa(self):
         result = DeterministicFiniteAutomaton(states=set(self.vertice_numbering_dictionary.keys()),
-                                              start_state=State(self.start_vertice),
+                                              start_state=State(self.start_vertices.pop()),
                                               final_states=set(map(lambda x: State(x), self.final_vertices)))
         for label, matrix in self.label_matrices.items():
             for i in range(matrix.nrows):
@@ -40,13 +64,10 @@ def from_file(path: str):
         if to not in result.vertice_numbering_dictionary.keys():
             result.vertice_numbering_dictionary[to] = i
             i += 1
-
+    result.vertices_amount = len(result.vertice_numbering_dictionary)
     for t in transitions:
         fr, label, to = t.split(' ')
-        if label not in result.label_matrices.keys():
-            result.label_matrices[label] = Matrix.dense(BOOL, len(result.vertice_numbering_dictionary),
-                                                        len(result.vertice_numbering_dictionary))
-        result.label_matrices[label][result.vertice_numbering_dictionary[fr], result.vertice_numbering_dictionary[to]] = True
+        result[label][result.vertice_numbering_dictionary[fr], result.vertice_numbering_dictionary[to]] = True
 
     return result
 
@@ -67,13 +88,12 @@ def from_dfa(dfa: DeterministicFiniteAutomaton):
             result.vertice_numbering_dictionary[s] = i
             i += 1
 
+    result.vertices_amount = len(result.vertice_numbering_dictionary)
     for fr, label, to in dfa._transition_function.get_edges():
-        if label not in result.label_matrices.keys():
-            result.label_matrices[label] = Matrix.dense(BOOL, len(result.vertice_numbering_dictionary), len(result.vertice_numbering_dictionary))
-        result.label_matrices[label][result.vertice_numbering_dictionary[fr], result.vertice_numbering_dictionary[to]] = True
+        result[label][result.vertice_numbering_dictionary[fr], result.vertice_numbering_dictionary[to]] = True
 
     for fs in dfa.final_states:
         result.final_vertices.add(result.vertice_numbering_dictionary[fs])
 
-    result.start_vertice = result.vertice_numbering_dictionary[dfa.start_state]
+    result.start_vertices.add(result.vertice_numbering_dictionary[dfa.start_state])
     return result

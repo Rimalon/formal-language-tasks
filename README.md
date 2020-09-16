@@ -43,7 +43,7 @@ ____
 ## Tasks status:
 :yellow_square: Task 1
 
-:black_square_button: Task 2
+:green_square: Task 2
 
 :black_square_button: Task 3
 

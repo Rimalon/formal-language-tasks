@@ -1,6 +1,6 @@
 import argparse
 from src.main.paths_query_executor import execute_query
-from pygraphblas import lib.GxB_NONZERO
+from pygraphblas import lib
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()

@@ -15,4 +15,5 @@ if __name__ == '__main__':
     query_result = execute_query(args)
     for i in range(query_result.nrows):
         for j in range(query_result.ncols):
-            print(j, ' reachable from ', i)
+            if query_result[i, j]:
+                print(j, ' reachable from ', i)

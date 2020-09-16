@@ -13,9 +13,9 @@ if __name__ == '__main__':
                         type=str, help='path to file with end vertices\nfile format:\n0 1 2')
     args = parser.parse_args()
     query_result = execute_query(args)
-    closure, reachable_vertices = query_result
-    print('closure statistic:')
-    for label, matrix in closure:
+    intersection, reachable_vertices = query_result
+    print('intersection statistic:')
+    for label, matrix in intersection.label_matrices.items():
         print('label: ', label, ': ', matrix.nvals, ' - vertices amount')
     print('reachable vertices')
     for i in range(query_result.nrows):

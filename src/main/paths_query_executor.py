@@ -32,7 +32,7 @@ def execute_query(args):
         for j in range(closure.ncols):
             if (i in intersection.start_vertices) and (j in intersection.final_vertices) and (closure[i, j]):
                 result[i // query.vertices_amount, j // query.vertices_amount] = True
-    return closure, filter_query_result(result, None if args.fr is None else read_vertices_set_from_file(args.fr),
+    return intersection, filter_query_result(result, None if args.fr is None else read_vertices_set_from_file(args.fr),
                                None if args.to is None else read_vertices_set_from_file(args.to))
 
 

@@ -56,7 +56,7 @@ def execute_query(args):
     result = Matrix.dense(BOOL, graph.vertices_amount, graph.vertices_amount)
     for i in range(closure.nrows):
         for j in range(closure.ncols):
-            if (i in intersection.start_vertices) and (j in intersection.final_vertices):
+            if (i in intersection.start_vertices) and (j in intersection.final_vertices) and (closure[i, j]):
                 result[i // query.vertices_amount, j // query.vertices_amount] = True
     print('result')
     print(result)

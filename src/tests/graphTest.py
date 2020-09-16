@@ -19,7 +19,7 @@ class GraphTestCase(unittest.TestCase):
         for label, matrix in graph.label_matrices.items():
             for i in range(matrix.nrows):
                 for j in range(matrix.ncols):
-                    self.assertEqual((i == 0 and j == 1 and label == 'a') or (i == 0 and j == 2 and label == 'b'), matrix[i, j])
+                    self.assertEqual((i == 0 and j == 1 and label == 'b') or (i == 0 and j == 2 and label == 'a'), matrix[i, j])
 
 
 if __name__ == '__main__':

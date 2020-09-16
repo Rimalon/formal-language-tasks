@@ -12,7 +12,12 @@ class GraphTestCase(unittest.TestCase):
         file = open(regex_path)
         regex = Regex(file.readline())
         file.close()
-        result = Graph.from_regex_file(regex_path).to_regex()
+        from_regex = Graph.from_regex_file(regex_path)
+        for label, matrix in from_regex.label_matrices.items():
+            for i in range(matrix.nrows):
+                for j in range(matrix.ncols):
+                    print(i, ' ', j, ' ', label, ' ', matrix[i, j])
+        result = from_regex.to_regex()
         self.assertEqual(regex, result)
 
     def test_from_file(self):
@@ -20,6 +25,7 @@ class GraphTestCase(unittest.TestCase):
         for label, matrix in graph.label_matrices.items():
             for i in range(matrix.nrows):
                 for j in range(matrix.ncols):
+                    print(i, ' ', j, ' ', label, ' ', matrix[i,j])
                     self.assertEqual((i == 0 and j == 1 and label == 'a') or (i == 0 and j == 2 and label == 'b'), matrix[i, j])
 
 

@@ -58,8 +58,8 @@ def execute_query(args):
         for j in range(closure.ncols):
             i_g, i_q = i // query.vertices_amount, i % query.vertices_amount
             j_g, j_q = j // query.vertices_amount, j % query.vertices_amount
-            if (i_g in graph.start_states) and (i_q in query.start_states):
-                if (j_g in graph.final_states) and (j_q in query.final_states):
+            if (i_g in graph.start_vertices) and (i_q in query.start_vertices):
+                if (j_g in graph.final_vertices) and (j_q in query.final_vertices):
                     result[i_g, j_g] = True
     print('result')
     print(result)

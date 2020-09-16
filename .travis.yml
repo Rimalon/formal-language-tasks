@@ -12,6 +12,6 @@ jobs:
   include:
     - stage: test
       script:
-      - python ./src/tests/pyformlangTest.py
-      - python ./src/tests/pygraphblasTest.py
-      - python -m unittest -v src.tests.graphTest
+      - python -m unittest -v src.tests.pyformlang_test
+      - python -m unittest -v src.tests.pygraphblas_test
+      - python -m unittest -v src.tests.graph_test

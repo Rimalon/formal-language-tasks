@@ -17,8 +17,8 @@ python main.py --graph %GRAPH_PATH% --query %QUERY_PATH% [--fr %FROM_VERTICES_PA
 ```
 --graph - path to file with graph file
 --query - path to file with query
---fr - path to file with start vertices
---to - path to file with end vertices
+--fr - path to file with start vertices. If not specified, all vertices are used.
+--to - path to file with end vertices. If not specified, all vertices are used.
 ```
 ### File formats:
 #### Graph:

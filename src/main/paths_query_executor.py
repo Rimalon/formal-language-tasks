@@ -9,7 +9,7 @@ def transitive_closure(matrix: Matrix) -> Matrix:
         old_nvals = result.nvals
         result += result @ result
         new_nvals = result.nvals
-        if old_nvals != new_nvals:
+        if old_nvals == new_nvals:
             changed = False
 
     return result

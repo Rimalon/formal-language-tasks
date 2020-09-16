@@ -22,10 +22,13 @@ def execute_query(args):
     intersection = graph & query
     intersection_matrix = Matrix.dense(BOOL, intersection.vertices_amount, intersection.vertices_amount)
     print('intersection result')
-    print(intersection_matrix)
+    for label, matrix in intersection.label_matrices:
+        print(label, ':')
+        print(matrix)
     for _, matrix in intersection.label_matrices.items():
         intersection_matrix += matrix
-
+    print('intersection matrix')
+    print(intersection_matrix)
     closure = transitive_closure(intersection_matrix)
     print('closure result')
     print(closure)

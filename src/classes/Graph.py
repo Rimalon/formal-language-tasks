@@ -30,9 +30,9 @@ def from_file(path: str):
     transitions = file.read().split('\n')
     file.close()
     result = Graph()
+    i = 0
     for t in transitions:
         fr, label, to = t.split(' ')
-        i = 0
         if fr not in result.vertice_numbering_dictionary.keys():
             result.vertice_numbering_dictionary[fr] = i
             i += 1
@@ -45,7 +45,7 @@ def from_file(path: str):
         fr, label, to = t.split(' ')
         if label not in result.label_matrices.keys():
             result.label_matrices[label] = Matrix.dense(BOOL, len(result.vertice_numbering_dictionary),
-                                                         len(result.vertice_numbering_dictionary))
+                                                        len(result.vertice_numbering_dictionary))
         result.label_matrices[label][result.vertice_numbering_dictionary[fr], result.vertice_numbering_dictionary[to]] = True
 
     return result
@@ -61,8 +61,8 @@ def from_regex_file(path: str):
 
 def from_dfa(dfa: DeterministicFiniteAutomaton):
     result = Graph()
+    i = 0
     for s in dfa.states:
-        i = 0
         if s not in result.vertice_numbering_dictionary.keys():
             result.vertice_numbering_dictionary[s] = i
             i += 1

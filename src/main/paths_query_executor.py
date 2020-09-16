@@ -56,7 +56,7 @@ def filter_query_result(matrix: Matrix, fr: set = None, to: set = None):
     result = Matrix.dense(BOOL, matrix.nrows, matrix.ncols)
     for i in range(matrix.nrows):
         for j in range(matrix.ncols):
-            if (fr is None or (i in fr and matrix[i, j])) and (to is None or (j in to and matrix[i, j])):
+            if ((fr is None or (i in fr)) and matrix[i, j]) and ((to is None or (j in to)) and matrix[i, j]):
                 result[i, j] = True
     print('filter result')
     print(result)

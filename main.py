@@ -1,5 +1,6 @@
 import argparse
 from src.main.paths_query_executor import execute_query
+from pygraphblas import lib.GxB_NONZERO
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
@@ -12,13 +13,12 @@ if __name__ == '__main__':
     parser.add_argument('--to', required=False, default=None,
                         type=str, help='path to file with end vertices\nfile format:\n0 1 2')
     args = parser.parse_args()
-    query_result = execute_query(args)
-    intersection, reachable_vertices = query_result
+    intersection, reachable_vertices = execute_query(args)
     print('intersection statistic:')
     for label, matrix in intersection.label_matrices.items():
-        print('label: ', label, ': ', matrix.nvals, ' - vertices amount')
+        print('label: ', label, ': ', matrix.select(lib.GxB_NONZERO).nvals, ' - vertices amount')
     print('reachable vertices')
-    for i in range(query_result.nrows):
-        for j in range(query_result.ncols):
-            if query_result[i, j]:
+    for i in range(reachable_vertices.nrows):
+        for j in range(reachable_vertices.ncols):
+            if reachable_vertices[i, j]:
                 print(j, ' reachable from ', i)

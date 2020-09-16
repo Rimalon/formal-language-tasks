@@ -48,12 +48,8 @@ def execute_query(args):
                 result[i // graph.vertices_amount, j % graph.vertices_amount] = True
     print('result')
     print(result)
-    print('args.fr:')
-    print((args.fr is None) if None else 'read_vertices_set_from_file(args.fr)')
-    print('args.to:')
-    print((args.to is 'None') if None else 'read_vertices_set_from_file(args.fr)')
-    return filter_query_result(result, args.fr is None if None else read_vertices_set_from_file(args.fr),
-                               args.to is None if None else read_vertices_set_from_file(args.to))
+    return filter_query_result(result, None if args.fr is None else read_vertices_set_from_file(args.fr),
+                               None if args.to is None else read_vertices_set_from_file(args.to))
 
 
 def filter_query_result(matrix: Matrix, fr: set = None, to: set = None):

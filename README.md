@@ -9,6 +9,34 @@ To run the installation script, execute the command:
 bash install.sh
 ```
 ____
+## Usage:
+```
+python main.py --graph %GRAPH_PATH% --query %QUERY_PATH% [--fr %FROM_VERTICES_PATH%] [--to %TO_VERTICES_PATH%]
+```
+### Arguments:
+```
+--graph - path to file with graph file
+--query - path to file with query
+--fr - path to file with start vertices
+--to - path to file with end vertices
+```
+### File formats:
+#### Graph:
+```
+0 a 1
+0 b 2
+1 c 2
+```
+#### Query:
+```
+Regex
+Example: (a|b)* 
+```
+#### Fr/To:
+```
+1 2
+```
+____
 ## Build status: 
 master: [![Build Status](https://travis-ci.com/Rimalon/formal-language-tasks.svg?branch=master)](https://travis-ci.com/Rimalon/formal-language-tasks)
 ____

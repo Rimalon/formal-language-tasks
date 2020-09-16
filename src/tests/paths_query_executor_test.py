@@ -27,7 +27,7 @@ class PQECase(unittest.TestCase):
         self.assertEqual(automata['c'].nonzero().nvals, 2)
         excepted_reachable_vertices = {(0, 2)}
         for i, j, _ in zip(*reachable_vertices_matrix.nonzero().to_lists()):
-            self.assertTrue(i, j in excepted_reachable_vertices)
+            self.assertEqual(reachable_vertices_matrix[i, j], (i, j) in excepted_reachable_vertices)
 
     def test_graph_regex_abc_from2_to2(self):
         args = parser.parse_args(args=('--graph ' + resources_path + '/graph.txt ' +
@@ -37,7 +37,7 @@ class PQECase(unittest.TestCase):
         automata, reachable_vertices_matrix = execute_query(args)
         excepted_reachable_vertices = {}
         for i, j, _ in zip(*reachable_vertices_matrix.nonzero().to_lists()):
-            self.assertTrue((i, j) in excepted_reachable_vertices)
+            self.assertEqual(reachable_vertices_matrix[i, j], (i, j) in excepted_reachable_vertices)
 
     def test_graph_regex_abc_to2(self):
         args = parser.parse_args(args=('--graph ' + resources_path + '/graph.txt ' +
@@ -46,7 +46,7 @@ class PQECase(unittest.TestCase):
         automata, reachable_vertices_matrix = execute_query(args)
         excepted_reachable_vertices = {(0, 2), (1, 2)}
         for i, j, _ in zip(*reachable_vertices_matrix.nonzero().to_lists()):
-            self.assertTrue(i, j in excepted_reachable_vertices)
+            self.assertEqual(reachable_vertices_matrix[i, j], (i, j) in excepted_reachable_vertices)
 
     def test_graph_regex_abc_from0(self):
         args = parser.parse_args(args=('--graph ' + resources_path + '/graph.txt ' +
@@ -55,7 +55,7 @@ class PQECase(unittest.TestCase):
         automata, reachable_vertices_matrix = execute_query(args)
         excepted_reachable_vertices = {(0, 1), (0, 2), (0, 3)}
         for i, j, _ in zip(*reachable_vertices_matrix.nonzero().to_lists()):
-            self.assertTrue(i, j in excepted_reachable_vertices)
+            self.assertEqual(reachable_vertices_matrix[i, j], (i, j) in excepted_reachable_vertices)
 
     def test_graph_regex_abc(self):
         args = parser.parse_args(args=('--graph ' + resources_path + '/graph.txt ' +
@@ -63,7 +63,7 @@ class PQECase(unittest.TestCase):
         automata, reachable_vertices_matrix = execute_query(args)
         excepted_reachable_vertices = {(0, 1), (0, 2), (0, 3), (1, 2), (1, 3), (2, 3)}
         for i, j, _ in zip(*reachable_vertices_matrix.nonzero().to_lists()):
-            self.assertTrue(i, j in excepted_reachable_vertices)
+            self.assertEqual(reachable_vertices_matrix[i, j], (i, j) in excepted_reachable_vertices)
 
 
 if __name__ == '__main__':

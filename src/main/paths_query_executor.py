@@ -18,10 +18,18 @@ def transitive_closure(matrix: Matrix) -> Matrix:
 def execute_query(args):
     graph = Graph.from_file(args.graph)
     query = Graph.from_regex_file(args.query)
+    print('graph start v:')
+    print(graph.start_vertices)
+    print('graph final v:')
+    print(graph.final_vertices)
     print('graph:')
     for label, matrix in graph.label_matrices.items():
         print(label, ':')
         print(matrix)
+    print('query start v:')
+    print(query.start_vertices)
+    print('query final v:')
+    print(query.final_vertices)
     print('query:')
     for label, matrix in query.label_matrices.items():
         print(label, ':')
@@ -29,6 +37,10 @@ def execute_query(args):
 
     intersection = graph & query
     intersection_matrix = Matrix.dense(BOOL, intersection.vertices_amount, intersection.vertices_amount)
+    print('intersection start v:')
+    print(intersection.start_vertices)
+    print('intersection final v:')
+    print(intersection.final_vertices)
     print('intersection result')
     for label, matrix in intersection.label_matrices.items():
         print(label, ':')

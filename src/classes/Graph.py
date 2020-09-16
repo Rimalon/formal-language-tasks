@@ -8,8 +8,8 @@ class Graph:
         self.label_matrices = dict()
         self.vertice_numbering_dictionary = dict()
         self.vertices_amount = vertices_amount
-        self.start_vertices = set()
-        self.final_vertices = set()
+        self.start_vertices = set(range(vertices_amount))
+        self.final_vertices = set(range(vertices_amount))
 
     def __getitem__(self, item) -> Matrix:
         if item not in self.label_matrices.keys():

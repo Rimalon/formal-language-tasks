@@ -23,11 +23,11 @@ class Graph:
         result = Graph(self.vertices_amount * other.vertices_amount)
         for i in self.start_vertices:
             for j in other.start_vertices:
-                result.start_vertices.add(i * self.vertices_amount + j)
+                result.start_vertices.add(i * other.vertices_amount + j)
 
         for i in self.final_vertices:
             for j in other.final_vertices:
-                result.final_vertices.add(i * self.vertices_amount + j)
+                result.final_vertices.add(i * other.vertices_amount + j)
 
         for label in self.label_matrices.keys():
             result.label_matrices[label] = self[label].kronecker(other[label])
@@ -65,6 +65,8 @@ def from_file(path: str):
             result.vertice_numbering_dictionary[to] = i
             i += 1
     result.vertices_amount = len(result.vertice_numbering_dictionary)
+    result.start_vertices = set(range(result.vertices_amount))
+    result.final_vertices = set(range(result.vertices_amount))
     for t in transitions:
         fr, label, to = t.split(' ')
         result[label][result.vertice_numbering_dictionary[fr], result.vertice_numbering_dictionary[to]] = True

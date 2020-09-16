@@ -21,17 +21,22 @@ def execute_query(args):
 
     intersection = graph & query
     intersection_matrix = Matrix.dense(BOOL, intersection.vertices_amount, intersection.vertices_amount)
+    print('intersection result')
+    print(intersection_matrix)
     for _, matrix in intersection.label_matrices.items():
         intersection_matrix += matrix
 
     closure = transitive_closure(intersection_matrix)
+    print('closure result')
+    print(closure)
 
     result = Matrix.dense(BOOL, graph.vertices_amount, graph.vertices_amount)
     for i in range(closure.nrows):
         for j in range(closure.ncols):
             if (i in intersection.start_vertices) and (j in intersection.final_vertices):
                 result[i // graph.vertices_amount, j % graph.vertices_amount] = True
-
+    print('result')
+    print(result)
     return filter_query_result(result, args.fr, args.to)
 
 
@@ -41,6 +46,8 @@ def filter_query_result(matrix: Matrix, fr: set = None, to: set = None):
         for j in range(matrix.ncols):
             if (fr is None or (i in fr)) and (to is None or (j in to)):
                 result[i, j] = True
+    print('filter result')
+    print(result)
     return result
 
 

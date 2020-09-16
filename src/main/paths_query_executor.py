@@ -32,7 +32,7 @@ def execute_query(args):
         for j in range(closure.ncols):
             if (i in intersection.start_vertices) and (j in intersection.final_vertices) and (closure[i, j]):
                 result[i // query.vertices_amount, j // query.vertices_amount] = True
-    return filter_query_result(result, None if args.fr is None else read_vertices_set_from_file(args.fr),
+    return closure, filter_query_result(result, None if args.fr is None else read_vertices_set_from_file(args.fr),
                                None if args.to is None else read_vertices_set_from_file(args.to))
 
 
@@ -42,16 +42,11 @@ def filter_query_result(matrix: Matrix, fr: set = None, to: set = None) -> Matri
         for j in range(matrix.ncols):
             if ((fr is None or (i in fr)) and matrix[i, j]) and ((to is None or (j in to)) and matrix[i, j]):
                 result[i, j] = True
-    print('filter result')
-    print(result)
     return result
 
 
 def read_vertices_set_from_file(path):
     file = open(path)
     vertices = file.readline().split(' ')
-    print(vertices)
-    print(map(lambda x: int(x), vertices))
-    print(set(map(lambda x: int(x), vertices)))
     file.close()
     return set(map(lambda x: int(x), vertices))

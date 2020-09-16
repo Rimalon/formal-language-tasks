@@ -13,6 +13,11 @@ if __name__ == '__main__':
                         type=str, help='path to file with end vertices\nfile format:\n0 1 2')
     args = parser.parse_args()
     query_result = execute_query(args)
+    closure, reachable_vertices = query_result
+    print('closure statistic:')
+    for label, matrix in closure:
+        print('label: ', label, ': ', matrix.nvals, ' - vertices amount')
+    print('reachable vertices')
     for i in range(query_result.nrows):
         for j in range(query_result.ncols):
             if query_result[i, j]:

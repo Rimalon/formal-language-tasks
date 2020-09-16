@@ -1,4 +1,4 @@
-from pygraphblas.matrix import Matrix, BOOL
+from pygraphblas import Matrix, BOOL
 from src.classes import Graph
 
 

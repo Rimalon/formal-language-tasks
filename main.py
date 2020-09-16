@@ -1,6 +1,5 @@
 import argparse
 from src.main.paths_query_executor import execute_query
-from pygraphblas import lib
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
@@ -16,7 +15,7 @@ if __name__ == '__main__':
     intersection, reachable_vertices = execute_query(args)
     print('intersection statistic:')
     for label, matrix in intersection.label_matrices.items():
-        print('label: ', label, ': ', matrix.select(lib.GxB_NONZERO).nvals, ' - vertices amount')
+        print('label: ', label, ': ', matrix.nonzero().nvals, ' - vertices amount')
     print('reachable vertices')
     for i in range(reachable_vertices.nrows):
         for j in range(reachable_vertices.ncols):

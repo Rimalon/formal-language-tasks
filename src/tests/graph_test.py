@@ -8,7 +8,7 @@ test_resources_path = '/home/travis/build/Rimalon/formal-language-tasks/src/test
 
 class GraphTestCase(unittest.TestCase):
     def test_from_regex(self):
-        graph = Graph.from_regex_file(test_resources_path + 'regex_a_or_b_abc.txt')
+        graph = Graph.from_regex_file(test_resources_path + 'regex_abc.txt')
         for label, matrix in graph.label_matrices.items():
             for i in range(matrix.nrows):
                 for j in range(matrix.ncols):

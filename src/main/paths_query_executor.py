@@ -65,5 +65,8 @@ def filter_query_result(matrix: Matrix, fr: set = None, to: set = None):
 def read_vertices_set_from_file(path):
     file = open(path)
     vertices = file.readline().split(' ')
+    print(vertices)
+    print(map(lambda x: int(x), vertices))
+    print(set(map(lambda x: int(x), vertices)))
     file.close()
     return set(map(lambda x: int(x), vertices))

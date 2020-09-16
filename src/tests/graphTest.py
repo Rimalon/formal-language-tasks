@@ -13,6 +13,10 @@ class GraphTestCase(unittest.TestCase):
         regex = Regex(file.readline())
         file.close()
         from_regex = Graph.from_regex_file(regex_path)
+        print('from regex numeration dict')
+        for k, v in from_regex.vertice_numbering_dictionary.items():
+            print(k, ' ', v)
+        print('from regex graph:')
         for label, matrix in from_regex.label_matrices.items():
             for i in range(matrix.nrows):
                 for j in range(matrix.ncols):

@@ -20,11 +20,11 @@ def execute_query(args):
     query = Graph.from_regex_file(args.query)
     print('graph:')
     for label, matrix in graph.label_matrices.items():
-        print(label,':')
+        print(label, ':')
         print(matrix)
     print('query:')
     for label, matrix in query.label_matrices.items():
-        print(label,':')
+        print(label, ':')
         print(matrix)
 
     intersection = graph & query
@@ -48,6 +48,10 @@ def execute_query(args):
                 result[i // graph.vertices_amount, j % graph.vertices_amount] = True
     print('result')
     print(result)
+    print('args.fr:')
+    print(args.fr)
+    print('args.to:')
+    print(args.to)
     return filter_query_result(result, args.fr is None if None else read_vertices_set_from_file(args.fr),
                                args.to is None if None else read_vertices_set_from_file(args.to))
 
@@ -56,7 +60,7 @@ def filter_query_result(matrix: Matrix, fr: set = None, to: set = None):
     result = Matrix.dense(BOOL, matrix.nrows, matrix.ncols)
     for i in range(matrix.nrows):
         for j in range(matrix.ncols):
-            if (fr is None or (i in fr)) and (to is None or (j in to)):
+            if (fr is None or (i in fr and matrix[i, j])) and (to is None or (j in to and matrix[i, j])):
                 result[i, j] = True
     print('filter result')
     print(result)

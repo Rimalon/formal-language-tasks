@@ -18,6 +18,14 @@ def transitive_closure(matrix: Matrix) -> Matrix:
 def execute_query(args):
     graph = Graph.from_file(args.graph)
     query = Graph.from_regex_file(args.query)
+    print('graph:')
+    for label, matrix in graph.label_matrices:
+        print(label,':')
+        print(matrix)
+    print('query:')
+    for label, matrix in query.label_matrices:
+        print(label,':')
+        print(matrix)
 
     intersection = graph & query
     intersection_matrix = Matrix.dense(BOOL, intersection.vertices_amount, intersection.vertices_amount)

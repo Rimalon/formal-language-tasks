@@ -49,9 +49,9 @@ def execute_query(args):
     print('result')
     print(result)
     print('args.fr:')
-    print(args.fr is None if None else 'read_vertices_set_from_file(args.fr)')
+    print((args.fr is None) if None else 'read_vertices_set_from_file(args.fr)')
     print('args.to:')
-    print(args.to is 'None' if None else 'read_vertices_set_from_file(args.fr)')
+    print((args.to is 'None') if None else 'read_vertices_set_from_file(args.fr)')
     return filter_query_result(result, args.fr is None if None else read_vertices_set_from_file(args.fr),
                                args.to is None if None else read_vertices_set_from_file(args.to))
 

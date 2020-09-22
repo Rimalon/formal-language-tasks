@@ -1,4 +1,6 @@
 import argparse
+import datetime
+
 from src.main.paths_query_executor import execute_query
 
 if __name__ == '__main__':
@@ -12,12 +14,17 @@ if __name__ == '__main__':
     parser.add_argument('--to', required=False, default=None,
                         type=str, help='path to file with end vertices\nfile format:\n0 1 2')
     args = parser.parse_args()
+    start_working_time = datetime.datetime.utcnow()
     intersection, reachable_vertices = execute_query(args)
     print('intersection statistic:')
     for label, matrix in intersection.label_matrices.items():
         print('label: ', label, ': ', matrix.nonzero().nvals, ' - vertices amount')
+    start_printing_working_time = datetime.datetime.utcnow()
+    print('query execution time: ', (start_printing_working_time - start_working_time).microseconds, ' millis')
     print('reachable vertices')
     for i in range(reachable_vertices.nrows):
         for j in range(reachable_vertices.ncols):
             if reachable_vertices[i, j]:
                 print(j, ' reachable from ', i)
+    end_working_time = datetime.datetime.utcnow()
+    print('printing pairs time: ', (end_working_time - start_printing_working_time).microseconds, ' millis')

@@ -22,9 +22,7 @@ if __name__ == '__main__':
     start_printing_working_time = datetime.datetime.utcnow()
     print('query execution time: ', (start_printing_working_time - start_working_time).microseconds, ' millis')
     print('reachable vertices')
-    for i in range(reachable_vertices.nrows):
-        for j in range(reachable_vertices.ncols):
-            if reachable_vertices[i, j]:
-                print(j, ' reachable from ', i)
+    for i, j, _ in zip(*reachable_vertices.nonzero().to_lists()):
+        print(j, ' reachable from ', i)
     end_working_time = datetime.datetime.utcnow()
     print('printing pairs time: ', (end_working_time - start_printing_working_time).microseconds, ' millis')

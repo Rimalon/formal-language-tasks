@@ -13,7 +13,7 @@ class Graph:
 
     def __getitem__(self, item) -> Matrix:
         if item not in self.label_matrices.keys():
-            self.label_matrices[item] = Matrix.dense(BOOL, self.vertices_amount, self.vertices_amount)
+            self.label_matrices[item] = Matrix.sparse(BOOL, self.vertices_amount, self.vertices_amount)
         return self.label_matrices[item]
 
     def __and__(self, other):

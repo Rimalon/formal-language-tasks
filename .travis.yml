@@ -11,8 +11,6 @@ install:
   - source "$HOME/miniconda/etc/profile.d/conda.sh"
   - conda env create -f environment.yml
   - conda activate formal-language-env
-  - git clone  https://github.com/michelp/pygraphblas.git --branch 3.3.3 ./pygraph
-  - bash ./pygraph/install-ubuntu.sh
 
 jobs:
   include:

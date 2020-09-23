@@ -10,6 +10,8 @@ parser.add_argument('--graph', required=True,
                     type=str, help='path to file with graph\nfile format:\n0 a 1\n0 b 2\n1 c 2')
 parser.add_argument('--queries', required=True,
                     type=str, help='path to file with query\nfile format: regex in first line')
+parser.add_argument('--type', required=False,
+                    type=str, help='sqr closure is default, set adj for adj closure')
 parser.add_argument('--fr', required=False, default=None,
                     type=str, help='path to file with start vertices\nfile format:\n0 1 2')
 parser.add_argument('--to', required=False, default=None,

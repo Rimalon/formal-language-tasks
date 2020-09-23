@@ -40,8 +40,9 @@ ____
 ### Benchmarks run:
 To run docker use:
 ```
-docker build -t flt . && docker run --rm -it --memory="12g" flt
+docker build -t flt . && docker run --rm -it flt
 ```
+In docker, use main.py as usual
 ____
 ## Build status: 
 master: [![Build Status](https://travis-ci.com/Rimalon/formal-language-tasks.svg?branch=master)](https://travis-ci.com/Rimalon/formal-language-tasks)

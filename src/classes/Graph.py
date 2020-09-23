@@ -52,7 +52,7 @@ class Graph:
 def from_file(path: str):
     file = open(path)
     transitions = file.read().split('\n')
-    transitions.remove('')
+    transitions = filter(lambda x: x != '', transitions)
     file.close()
     result = Graph()
     i = 0

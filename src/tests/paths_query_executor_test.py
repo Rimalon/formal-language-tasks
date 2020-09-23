@@ -19,7 +19,7 @@ parser.add_argument('--to', required=False, default=None,
 class PQECase(unittest.TestCase):
     def test_graph_regex_abc_from0_to2(self):
         args = parser.parse_args(args=('--graph ' + resources_path + '/graph.txt ' +
-                                       '--queries ' + resources_path + '/regex_abc.txt ' +
+                                       '--queries ' + resources_path + '/queries/regex_abc.txt ' +
                                        '--fr ' + resources_path + '/vertices_0.txt ' +
                                        '--to ' + resources_path + '/vertices_2.txt').split())
         graph = Graph.from_file(args.graph)
@@ -34,7 +34,7 @@ class PQECase(unittest.TestCase):
 
     def test_graph_regex_abc_from2_to2(self):
         args = parser.parse_args(args=('--graph ' + resources_path + '/graph.txt ' +
-                                       '--queries ' + resources_path + '/regex_abc.txt ' +
+                                       '--queries ' + resources_path + '/queries/regex_abc.txt ' +
                                        '--fr ' + resources_path + '/vertices_2.txt ' +
                                        '--to ' + resources_path + '/vertices_2.txt').split())
         graph = Graph.from_file(args.graph)
@@ -46,7 +46,7 @@ class PQECase(unittest.TestCase):
 
     def test_graph_regex_abc_to2(self):
         args = parser.parse_args(args=('--graph ' + resources_path + '/graph.txt ' +
-                                       '--queries ' + resources_path + '/regex_abc.txt ' +
+                                       '--queries ' + resources_path + '/queries/regex_abc.txt ' +
                                        '--to ' + resources_path + '/vertices_2.txt').split())
         graph = Graph.from_file(args.graph)
         query = Graph.from_regex_file(args.queries)
@@ -57,7 +57,7 @@ class PQECase(unittest.TestCase):
 
     def test_graph_regex_abc_from0(self):
         args = parser.parse_args(args=('--graph ' + resources_path + '/graph.txt ' +
-                                       '--queries ' + resources_path + '/regex_abc.txt ' +
+                                       '--queries ' + resources_path + '/queries/regex_abc.txt ' +
                                        '--fr ' + resources_path + '/vertices_0.txt').split())
         graph = Graph.from_file(args.graph)
         query = Graph.from_regex_file(args.queries)
@@ -68,7 +68,7 @@ class PQECase(unittest.TestCase):
 
     def test_graph_regex_abc(self):
         args = parser.parse_args(args=('--graph ' + resources_path + '/graph.txt ' +
-                                       '--queries ' + resources_path + '/regex_abc.txt').split())
+                                       '--queries ' + resources_path + '/queries/regex_abc.txt').split())
         graph = Graph.from_file(args.graph)
         query = Graph.from_regex_file(args.queries)
         automata, reachable_vertices_matrix = execute_query(args, graph, query)

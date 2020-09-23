@@ -3,7 +3,7 @@ import unittest
 from src.main.paths_query_executor import execute_query
 from src.classes import Graph
 
-resources_path = '/home/travis/build/Rimalon/formal-language-tasks/src/tests/resources/'
+resources_path = '/home/travis/build/Rimalon/formal-language-tasks/src/tests/resources'
 
 parser = argparse.ArgumentParser()
 parser.add_argument('--graph', required=True,

@@ -28,20 +28,18 @@ def execute_query(args):
     closure = transitive_closure(intersection_matrix)
 
     result = Matrix.sparse(BOOL, graph.vertices_amount, graph.vertices_amount)
-    for i in range(closure.nrows):
-        for j in range(closure.ncols):
-            if (i in intersection.start_vertices) and (j in intersection.final_vertices) and (closure[i, j]):
-                result[i // query.vertices_amount, j // query.vertices_amount] = True
+    for i, j, _ in zip(*closure.select(lib.GxB_NONZERO).to_lists()):
+        if (i in intersection.start_vertices) and (j in intersection.final_vertices) and (closure[i, j]):
+            result[i // query.vertices_amount, j // query.vertices_amount] = True
     return intersection, filter_query_result(result, None if args.fr is None else read_vertices_set_from_file(args.fr),
                                None if args.to is None else read_vertices_set_from_file(args.to))
 
 
 def filter_query_result(matrix: Matrix, fr: set = None, to: set = None) -> Matrix:
     result = Matrix.sparse(BOOL, matrix.nrows, matrix.ncols)
-    for i in range(matrix.nrows):
-        for j in range(matrix.ncols):
-            if ((fr is None or (i in fr)) and matrix[i, j]) and ((to is None or (j in to)) and matrix[i, j]):
-                result[i, j] = True
+    for i, j, _ in zip(*matrix.select(lib.GxB_NONZERO).to_lists()):
+        if ((fr is None or (i in fr)) and matrix[i, j]) and ((to is None or (j in to)) and matrix[i, j]):
+            result[i, j] = True
     return result
 
 

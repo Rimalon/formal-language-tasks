@@ -2,7 +2,7 @@ from pygraphblas import Matrix, BOOL
 from src.classes import Graph
 
 
-def transitive_closure(matrix: Matrix) -> Matrix:
+def transitive_closure_sqr(matrix: Matrix) -> Matrix:
     result = matrix.dup()
     changed = True
     while changed:
@@ -11,21 +11,34 @@ def transitive_closure(matrix: Matrix) -> Matrix:
         new_nvals = result.nvals
         if old_nvals == new_nvals:
             changed = False
-
     return result
 
 
-def execute_query(args):
-    graph = Graph.from_file(args.graph)
-    query = Graph.from_regex_file(args.query)
+def transitive_closure_adj(matrix: Matrix) -> Matrix:
+    adj = matrix.dup()
+    result = matrix.dup()
+    changed = True
+    while changed:
+        old_nvals = result.nvals
+        result += adj @ result
+        new_nvals = result.nvals
+        if old_nvals == new_nvals:
+            changed = False
+    return result
 
+
+def execute_query(args, graph, query):
     intersection = graph & query
     intersection_matrix = Matrix.sparse(BOOL, intersection.vertices_amount, intersection.vertices_amount)
 
     for _, matrix in intersection.label_matrices.items():
         intersection_matrix += matrix
-
-    closure = transitive_closure(intersection_matrix)
+    if args.type == 'adj':
+        print("adj closure:")
+        closure = transitive_closure_adj(intersection_matrix)
+    else:
+        print("sqr closure:")
+        closure = transitive_closure_sqr(intersection_matrix)
 
     result = Matrix.sparse(BOOL, graph.vertices_amount, graph.vertices_amount)
     for i, j, _ in zip(*closure.nonzero().to_lists()):

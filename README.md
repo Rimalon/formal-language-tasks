@@ -11,12 +11,12 @@ bash install.sh
 ____
 ## Usage:
 ```
-python main.py --graph %GRAPH_PATH% --query %QUERY_PATH% [--fr %FROM_VERTICES_PATH%] [--to %TO_VERTICES_PATH%]
+python main.py --graph %GRAPH_PATH% --queries %QUERIES_FOLDER_PATH% [--fr %FROM_VERTICES_PATH%] [--to %TO_VERTICES_PATH%]
 ```
 ### Arguments:
 ```
 --graph - path to file with graph file
---query - path to file with query
+--queries - path to folder with regexes
 --fr - path to file with start vertices. If not specified, all vertices are used.
 --to - path to file with end vertices. If not specified, all vertices are used.
 ```
@@ -36,6 +36,13 @@ Example: (a|b)*
 ```
 1 2
 ```
+____
+### Benchmarks run:
+To run docker use:
+```
+docker build -t flt . && docker run --rm -it flt
+```
+In docker, use main.py as usual
 ____
 ## Build status: 
 master: [![Build Status](https://travis-ci.com/Rimalon/formal-language-tasks.svg?branch=master)](https://travis-ci.com/Rimalon/formal-language-tasks)

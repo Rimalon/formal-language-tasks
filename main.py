@@ -3,7 +3,7 @@ import os
 import time
 
 from src.classes import Graph
-from src.main.paths_query_executor import execute_query
+from src.main.RPQ import execute_query
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()

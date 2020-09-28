@@ -1,6 +1,6 @@
 import argparse
 import unittest
-from src.main.paths_query_executor import execute_query
+from src.main.RPQ import execute_query
 from src.classes import Graph
 
 resources_path = '/home/travis/build/Rimalon/formal-language-tasks/src/tests/resources'

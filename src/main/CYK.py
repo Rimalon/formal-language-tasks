@@ -1,9 +1,7 @@
 from typing import List
 
 from pyformlang.cfg import Terminal
-
 import numpy as np
-
 from src.classes import CNF
 
 
@@ -15,7 +13,6 @@ def cyk(word: List[Terminal], cnf: CNF):
     for index, symbol in enumerate(cnf.variables):
         numbering_dict[symbol] = index
     m = np.zeros((n, n, len(cnf.variables)), bool)
-    cnf._set_impacts_and_remaining_lists()
     for s in range(n):
         for production in cnf.productions:
             if len(production.body) == 1 and production.body[0] == word[s]:

@@ -23,12 +23,12 @@ class CNF(CFG):
         super().__init__(cfg.variables, cfg.terminals, cfg.start_symbol, cfg.productions)
 
 
-def from_file(path: str, is_reduced: bool = False):
+def from_file(path: str, start_symbol=Variable("S"), is_reduced: bool = False):
     file = open(path)
     productions = ''
     for production in file.read().split('\n'):
         head, product = (production, 'epsilon') if production.find(' ') == -1 else (production.split(' ', 1))
         productions += f'{head} -> {product}\n'
     file.close()
-    cfg = CFG.from_text(productions)
+    cfg = CFG.from_text(productions, start_symbol)
     return CNF(cfg, is_reduced)

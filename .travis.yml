@@ -16,12 +16,8 @@ jobs:
   include:
     - stage: test
       script:
-      #- python -m unittest -v src.tests.pyformlang_test
-      #- python -m unittest -v src.tests.pygraphblas_test
+      - python -m unittest -v src.tests.pyformlang_test
+      - python -m unittest -v src.tests.pygraphblas_test
       - python -m unittest -v src.tests.graph_test
       - python -m unittest -v src.tests.paths_query_executor_test
-      - python main.py --graph /home/travis/build/Rimalon/formal-language-tasks/src/tests/resources/graph.txt --queries /home/travis/build/Rimalon/formal-language-tasks/src/tests/resources/queries  --fr /home/travis/build/Rimalon/formal-language-tasks/src/tests/resources/vertices_0.txt --to /home/travis/build/Rimalon/formal-language-tasks/src/tests/resources/vertices_2.txt
-      - python main.py --graph /home/travis/build/Rimalon/formal-language-tasks/src/tests/resources/graph.txt --queries /home/travis/build/Rimalon/formal-language-tasks/src/tests/resources/queries --fr /home/travis/build/Rimalon/formal-language-tasks/src/tests/resources/vertices_2.txt --to /home/travis/build/Rimalon/formal-language-tasks/src/tests/resources/vertices_2.txt
-      - python main.py --graph /home/travis/build/Rimalon/formal-language-tasks/src/tests/resources/graph.txt --queries /home/travis/build/Rimalon/formal-language-tasks/src/tests/resources/queries --to /home/travis/build/Rimalon/formal-language-tasks/src/tests/resources/vertices_2.txt
-      - python main.py --graph /home/travis/build/Rimalon/formal-language-tasks/src/tests/resources/graph.txt --queries /home/travis/build/Rimalon/formal-language-tasks/src/tests/resources/queries --fr /home/travis/build/Rimalon/formal-language-tasks/src/tests/resources/vertices_0.txt
-      - python main.py --graph /home/travis/build/Rimalon/formal-language-tasks/src/tests/resources/graph.txt --queries /home/travis/build/Rimalon/formal-language-tasks/src/tests/resources/queries
+      - python -m unittest -v src.tests.cyk_test

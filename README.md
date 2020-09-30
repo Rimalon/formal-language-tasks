@@ -52,9 +52,9 @@ ____
 
 :green_square: Task 2
 
-:black_square_button: Task 3
+:green_square: Task 3
 
-:black_square_button: Task 4
+:green_square: Task 4
 
 :black_square_button: Task 5
 

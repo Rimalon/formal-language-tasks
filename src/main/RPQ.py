@@ -1,5 +1,7 @@
 from pygraphblas import Matrix, BOOL
 
+from src.main.MatrixOperations import transitive_closure_adj, transitive_closure_sqr
+
 """Regular Path Querying.
 
 This program calculates the reachable vertices in the graph for the corresponding query.
@@ -46,31 +48,6 @@ def execute_query(args, graph, query):
             result[i // query.vertices_amount, j // query.vertices_amount] = True
     return intersection, filter_query_result(result, None if args.fr is None else read_vertices_set_from_file(args.fr),
                                              None if args.to is None else read_vertices_set_from_file(args.to))
-
-
-def transitive_closure_sqr(matrix: Matrix) -> Matrix:
-    result = matrix.dup()
-    changed = True
-    while changed:
-        old_nvals = result.nvals
-        result += result @ result
-        new_nvals = result.nvals
-        if old_nvals == new_nvals:
-            changed = False
-    return result
-
-
-def transitive_closure_adj(matrix: Matrix) -> Matrix:
-    adj = matrix.dup()
-    result = matrix.dup()
-    changed = True
-    while changed:
-        old_nvals = result.nvals
-        result += adj @ result
-        new_nvals = result.nvals
-        if old_nvals == new_nvals:
-            changed = False
-    return result
 
 
 def filter_query_result(matrix: Matrix, fr: set = None, to: set = None) -> Matrix:

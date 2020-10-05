@@ -1,4 +1,4 @@
-from pyformlang.finite_automaton import DeterministicFiniteAutomaton, State, Symbol
+from pyformlang.finite_automaton import DeterministicFiniteAutomaton, State, Symbol, EpsilonNFA
 from pygraphblas import Matrix, BOOL
 from pyformlang.regular_expression import Regex
 
@@ -18,6 +18,17 @@ class Graph:
 
     def __and__(self, other):
         return self.get_intersection(other)
+
+    def __copy__(self):
+        result = Graph(self.vertices_amount)
+        result.label_matrices = self.label_matrices.copy()
+        result.vertice_numbering_dictionary = self.vertice_numbering_dictionary.copy()
+        result.start_vertices = self.start_vertices.copy()
+        result.final_vertices = self.final_vertices.copy()
+        return result
+
+    def copy(self):
+        return self.__copy__()
 
     def get_intersection(self, other: "Graph"):
         result = Graph(self.vertices_amount * other.vertices_amount)
@@ -82,6 +93,16 @@ def from_regex_file(path: str):
     dfa: DeterministicFiniteAutomaton = regex.to_epsilon_nfa().to_deterministic().minimize()
     return from_dfa(dfa)
 
+#TODO: more one production implementation
+def recursive_automata_from_file(path: str):
+    file = open(path)
+    for production in file.read().split('\n'):
+        head, regex = (production, 'epsilon') if production.find(' ') == -1 else (production.split(' ', 1))
+        dfa : DeterministicFiniteAutomaton = Regex(regex).to_epsilon_nfa().to_deterministic().minimize()
+    file.close()
+    return from_dfa(dfa)
+
+
 
 def from_dfa(dfa: DeterministicFiniteAutomaton):
     result = Graph()
@@ -93,7 +114,7 @@ def from_dfa(dfa: DeterministicFiniteAutomaton):
 
     result.vertices_amount = len(result.vertice_numbering_dictionary)
     for fr, label, to in dfa._transition_function.get_edges():
-        result[label][result.vertice_numbering_dictionary[fr], result.vertice_numbering_dictionary[to]] = True
+        result[label.value][result.vertice_numbering_dictionary[fr], result.vertice_numbering_dictionary[to]] = True
 
     for fs in dfa.final_states:
         result.final_vertices.add(result.vertice_numbering_dictionary[fs])

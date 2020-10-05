@@ -1,4 +1,7 @@
+from pygraphblas import Matrix, BOOL
+
 from src.classes import Graph, CNF
+from src.main.MatrixOperations import transitive_closure_sqr
 
 
 def context_free_path_querying(grammar: CNF, graph: Graph):
@@ -27,3 +30,31 @@ def context_free_path_querying(grammar: CNF, graph: Graph):
                 m.append((production.head, vm, v1r))
                 r.append((production.head, vm, v1r))
     return r
+
+
+def context_free_path_querying_tensors(grammar: Graph, graph: Graph):
+    M2 = graph.copy()
+    #TODO: initialize for non-terminals
+    # for N in grammar.label_matrices.keys():
+    #    if ()
+
+    is_changed = True
+    while is_changed:
+        old_nvals = 0
+        for _, matrix in M2.label_matrices.items():
+            old_nvals += matrix.nonzero().nvals
+        intersection = grammar & M2
+        M3 = Matrix.sparse(BOOL, intersection.vertices_amount, intersection.vertices_amount)
+        for _, matrix in intersection.label_matrices.items():
+            M3 += matrix
+        tC3 = transitive_closure_sqr(M3)
+        for i, j, _ in zip(*tC3.nonzero().to_lists()):
+            if (i // grammar.vertices_amount in grammar.start_vertices) and (j // grammar.vertices_amount in grammar.final_vertices):
+                for label, matrix in M2.label_matrices.items():
+                    if label.isupper():
+                        M2[label][i % M2.vertices_amount, j % M2.vertices_amount] = True
+        new_nvals = 0
+        for _, matrix in M2.label_matrices.items():
+            new_nvals += matrix.nonzero().nvals
+        is_changed = new_nvals != old_nvals
+    return M2

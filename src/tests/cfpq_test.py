@@ -3,10 +3,12 @@ import unittest
 from pyformlang.cfg import Variable
 
 from src.classes import CNF, Graph
-from src.main.CFPQ import context_free_path_querying
+from src.main.CFPQ import context_free_path_querying, context_free_path_querying_tensors
 
-graph_path = '/home/travis/build/Rimalon/formal-language-tasks/src/tests/resources/cfpq_graph.txt'
-grammar_path = '/home/travis/build/Rimalon/formal-language-tasks/src/tests/resources/cfpq_grammar.txt'
+test_resources_path = '/home/travis/build/Rimalon/formal-language-tasks/src/tests/resources/'
+graph_path = test_resources_path + 'cfpq_graph.txt'
+grammar_path = test_resources_path + 'cfpq_grammar.txt'
+tensors_grammar_path = test_resources_path + 'recursive.txt'
 S = Variable('S')
 A = Variable('A')
 B = Variable('B')
@@ -23,6 +25,16 @@ class CFPQTestCase(unittest.TestCase):
         self.assertEqual(len(actual_res), len(expected_res))
         for tuple in expected_res:
             self.assertTrue(actual_res.__contains__(tuple))
+
+    def test_cfpq_tensors(self):
+        grammar = Graph.recursive_automata_from_file(tensors_grammar_path)
+        graph = Graph.from_file(graph_path)
+        actual_res = context_free_path_querying_tensors(grammar, graph)
+
+        self.assertEqual(actual_res['a'].nonzero().nvals, 3)
+        self.assertEqual(actual_res['b'].nonzero().nvals, 2)
+        self.assertEqual(actual_res['S'].nonzero().nvals, 6)
+
 
 
 if __name__ == '__main__':

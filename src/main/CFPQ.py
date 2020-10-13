@@ -1,6 +1,10 @@
+from typing import AbstractSet
+
 from pygraphblas import Matrix, BOOL
 
-from src.classes import Graph, CNF
+from src.classes.CNF import CNF
+from src.classes.Graph import Graph
+
 from src.main.MatrixOperations import transitive_closure_sqr
 
 
@@ -32,29 +36,49 @@ def context_free_path_querying(grammar: CNF, graph: Graph):
     return r
 
 
-def context_free_path_querying_tensors(grammar: Graph, graph: Graph):
+def context_free_path_querying_matrices(grammar: CNF, graph: Graph):
+    T = Graph(graph.vertices_amount)
+    for label, matrix in graph.label_matrices.items():
+        for i, j, _ in zip(*matrix.nonzero().to_lists()):
+            for production in [p for p in grammar.productions if len(p.body) == 1]:
+                if production.body[0].value == label:
+                    T[production.head.value][i, j] = True
+
+    for production in [p for p in grammar.productions if len(p.body) == 0]:
+        for j in range(T.vertices_amount):
+            T[production.head.value][j, j] = True
+    double_productions = [p for p in grammar.productions if len(p.body) == 2]
+    is_changed = True
+    for v in [v for v in grammar.variables if v.value not in T.label_matrices.keys()]:
+        T[v.value]
+    while is_changed:
+        old_nvals = T.nvals()
+        for label in T.label_matrices.keys():
+            for production in [p for p in double_productions if label == p.head.value]:
+                T[label] += T[production.body[0].value] @ T[production.body[1].value]
+        is_changed = T.nvals() != old_nvals
+    return T
+
+
+def context_free_path_querying_tensors(rec_automata: Graph, epsilon_generate_set: AbstractSet, graph: Graph):
     M2 = graph.copy()
-    #TODO: initialize for non-terminals
-    # for N in grammar.label_matrices.keys():
-    #    if ()
+    for N in epsilon_generate_set:
+        for j in range(M2.vertices_amount):
+            M2[N][j, j] = True
 
     is_changed = True
     while is_changed:
-        old_nvals = 0
-        for _, matrix in M2.label_matrices.items():
-            old_nvals += matrix.nonzero().nvals
-        intersection = grammar & M2
+        old_nvals = M2.nvals()
+        intersection = rec_automata & M2
         M3 = Matrix.sparse(BOOL, intersection.vertices_amount, intersection.vertices_amount)
         for _, matrix in intersection.label_matrices.items():
             M3 += matrix
         tC3 = transitive_closure_sqr(M3)
         for i, j, _ in zip(*tC3.nonzero().to_lists()):
-            if (i // grammar.vertices_amount in grammar.start_vertices) and (j // grammar.vertices_amount in grammar.final_vertices):
+            if (i // graph.vertices_amount in rec_automata.start_vertices) and (j // graph.vertices_amount in rec_automata.final_vertices):
                 for label, matrix in M2.label_matrices.items():
                     if label.isupper():
                         M2[label][i % M2.vertices_amount, j % M2.vertices_amount] = True
-        new_nvals = 0
-        for _, matrix in M2.label_matrices.items():
-            new_nvals += matrix.nonzero().nvals
-        is_changed = new_nvals != old_nvals
+        is_changed = M2.nvals() != old_nvals
     return M2
+

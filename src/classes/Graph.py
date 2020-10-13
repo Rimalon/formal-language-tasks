@@ -1,4 +1,6 @@
-from pyformlang.finite_automaton import DeterministicFiniteAutomaton, State, Symbol, EpsilonNFA
+from functools import reduce
+
+from pyformlang.finite_automaton import DeterministicFiniteAutomaton, State, Symbol
 from pygraphblas import Matrix, BOOL
 from pyformlang.regular_expression import Regex
 
@@ -15,6 +17,9 @@ class Graph:
         if item not in self.label_matrices.keys():
             self.label_matrices[item] = Matrix.sparse(BOOL, self.vertices_amount, self.vertices_amount)
         return self.label_matrices[item]
+
+    def __setitem__(self, key, value):
+        self.label_matrices[key] = value
 
     def __and__(self, other):
         return self.get_intersection(other)
@@ -59,6 +64,12 @@ class Graph:
     def to_regex(self):
         return self.to_dfa().to_regex()
 
+    def nvals(self):
+        result = 0
+        for _, matrix in self.label_matrices.items():
+            result += matrix.nonzero().nvals
+        return result
+
 
 def from_file(path: str):
     file = open(path)
@@ -93,15 +104,48 @@ def from_regex_file(path: str):
     dfa: DeterministicFiniteAutomaton = regex.to_epsilon_nfa().to_deterministic().minimize()
     return from_dfa(dfa)
 
-#TODO: more one production implementation
+
 def recursive_automata_from_file(path: str):
+    epsilon_generate_set = set()
+    regex_dict = dict()
     file = open(path)
     for production in file.read().split('\n'):
-        head, regex = (production, 'epsilon') if production.find(' ') == -1 else (production.split(' ', 1))
-        dfa : DeterministicFiniteAutomaton = Regex(regex).to_epsilon_nfa().to_deterministic().minimize()
+        if production.find(' ') == -1:
+            epsilon_generate_set.add(production)
+        else:
+            head, regex = production.split(' ', 1)
+            if head not in regex_dict.keys():
+                regex_dict[head] = set()
+            regex_dict[head].add(regex)
     file.close()
-    return from_dfa(dfa)
-
+    dfa_dict = dict(
+        map(
+            lambda item: (
+                item[0],
+                Regex(
+                    reduce(lambda x, value: x + '|' + value, item[1])).to_epsilon_nfa().to_deterministic().minimize()),
+            regex_dict.items()))
+    result_vertice_numbering_dictionary = dict()
+    i = 0
+    for label, dfa in dfa_dict.items():
+        for s in dfa.states:
+            if s not in result_vertice_numbering_dictionary.keys():
+                result_vertice_numbering_dictionary[label + s.value] = i
+                i += 1
+    result = Graph(len(result_vertice_numbering_dictionary))
+    result.vertice_numbering_dictionary = result_vertice_numbering_dictionary
+    result.start_vertices = set()
+    result.final_vertices = set()
+    for label, dfa in dfa_dict.items():
+        for s in dfa.start_states:
+            result.start_vertices.add(result.vertice_numbering_dictionary[label + s.value])
+        for s in dfa.final_states:
+            result.final_vertices.add(result.vertice_numbering_dictionary[label + s.value])
+        for fr, l, to in dfa._transition_function.get_edges():
+            result[l.value][result.vertice_numbering_dictionary[label + fr.value], result.vertice_numbering_dictionary[label + to.value]] = True
+    for v in [v for v in dfa_dict.keys() if v not in result.label_matrices.keys()]:
+        result[v]
+    return result, epsilon_generate_set
 
 
 def from_dfa(dfa: DeterministicFiniteAutomaton):

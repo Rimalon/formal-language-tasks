@@ -37,48 +37,48 @@ def context_free_path_querying(grammar: CNF, graph: Graph):
 
 
 def context_free_path_querying_matrices(grammar: CNF, graph: Graph):
-    T = Graph(graph.vertices_amount)
+    t = Graph(graph.vertices_amount)
     for label, matrix in graph.label_matrices.items():
         for i, j, _ in zip(*matrix.nonzero().to_lists()):
             for production in [p for p in grammar.productions if len(p.body) == 1]:
                 if production.body[0].value == label:
-                    T[production.head.value][i, j] = True
+                    t[production.head.value][i, j] = True
 
     for production in [p for p in grammar.productions if len(p.body) == 0]:
-        for j in range(T.vertices_amount):
-            T[production.head.value][j, j] = True
+        for j in range(t.vertices_amount):
+            t[production.head.value][j, j] = True
     double_productions = [p for p in grammar.productions if len(p.body) == 2]
     is_changed = True
-    for v in [v for v in grammar.variables if v.value not in T.label_matrices.keys()]:
-        T[v.value]
+    for v in [v for v in grammar.variables if v.value not in t.label_matrices.keys()]:
+        t[v.value]
     while is_changed:
-        old_nvals = T.nvals()
-        for label in T.label_matrices.keys():
+        old_nvals = t.nvals()
+        for label in t.label_matrices.keys():
             for production in [p for p in double_productions if label == p.head.value]:
-                T[label] += T[production.body[0].value] @ T[production.body[1].value]
-        is_changed = T.nvals() != old_nvals
-    return T
+                t[label] += t[production.body[0].value] @ t[production.body[1].value]
+        is_changed = t.nvals() != old_nvals
+    return t
 
 
 def context_free_path_querying_tensors(rec_automata: Graph, epsilon_generate_set: AbstractSet, graph: Graph):
-    M2 = graph.copy()
-    for N in epsilon_generate_set:
-        for j in range(M2.vertices_amount):
-            M2[N][j, j] = True
+    m2 = graph.copy()
+    for n in epsilon_generate_set:
+        for j in range(m2.vertices_amount):
+            m2[n][j, j] = True
 
     is_changed = True
     while is_changed:
-        old_nvals = M2.nvals()
-        intersection = rec_automata & M2
-        M3 = Matrix.sparse(BOOL, intersection.vertices_amount, intersection.vertices_amount)
+        old_nvals = m2.nvals()
+        intersection = rec_automata & m2
+        m3 = Matrix.sparse(BOOL, intersection.vertices_amount, intersection.vertices_amount)
         for _, matrix in intersection.label_matrices.items():
-            M3 += matrix
-        tC3 = transitive_closure_sqr(M3)
-        for i, j, _ in zip(*tC3.nonzero().to_lists()):
+            m3 += matrix
+        tc3 = transitive_closure_sqr(m3)
+        for i, j, _ in zip(*tc3.nonzero().to_lists()):
             if (i // graph.vertices_amount in rec_automata.start_vertices) and (j // graph.vertices_amount in rec_automata.final_vertices):
-                for label, matrix in M2.label_matrices.items():
+                for label, matrix in m2.label_matrices.items():
                     if label.isupper():
-                        M2[label][i % M2.vertices_amount, j % M2.vertices_amount] = True
-        is_changed = M2.nvals() != old_nvals
-    return M2
+                        m2[label][i % m2.vertices_amount, j % m2.vertices_amount] = True
+        is_changed = m2.nvals() != old_nvals
+    return m2
 

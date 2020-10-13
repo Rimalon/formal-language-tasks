@@ -18,10 +18,11 @@ class GraphTestCase(unittest.TestCase):
         self.assertTrue(graph['b'][1, 3])
 
     def test_recursive_automata_from_file(self):
-        graph = Graph.recursive_automata_from_file(test_resources_path + 'recursive.txt')
+        graph, epsilon_set = Graph.recursive_automata_from_file(test_resources_path + 'recursive.txt')
         self.assertEqual(graph['a'].nonzero().nvals, 1)
         self.assertEqual(graph['b'].nonzero().nvals, 2)
         self.assertEqual(graph['S'].nonzero().nvals, 1)
+        self.assertEqual(len(epsilon_set), 0)
 
 
 if __name__ == '__main__':

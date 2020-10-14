@@ -11,6 +11,8 @@ graph_path = test_resources_path + 'cfpq_graph.txt'
 grammar_path = test_resources_path + 'cfpq_grammar.txt'
 tensors_grammar_path = test_resources_path + 'recursive.txt'
 matrices_grammar_path = test_resources_path + 'cfpq_matrices_grammar.txt'
+epsilon_tensors_grammar_path = test_resources_path + 'grammar_aSbS_or_epsilon.txt'
+epsilon_matrices_grammar_path = test_resources_path + 'epsilon_cfpq_matrices_grammar.txt'
 S = Variable('S')
 A = Variable('A')
 B = Variable('B')
@@ -37,6 +39,14 @@ class CFPQTestCase(unittest.TestCase):
         self.assertEqual(actual_res['S'].nonzero().nvals, 6)
         self.assertEqual(actual_res['S1'].nonzero().nvals, 6)
 
+    def test_epsilon_context_free_path_querying_matrices(self):
+        grammar = CNF.from_file(epsilon_matrices_grammar_path)
+        graph = Graph.from_file(graph_path)
+        actual_res = context_free_path_querying_matrices(grammar, graph)
+        self.assertEqual(actual_res['A'].nonzero().nvals, 3)
+        self.assertEqual(actual_res['B'].nonzero().nvals, 2)
+        self.assertEqual(actual_res['S'].nonzero().nvals, 5)
+
 
     def test_cfpq_tensors(self):
         grammar, epsilon_set = Graph.recursive_automata_from_file(tensors_grammar_path)
@@ -46,7 +56,13 @@ class CFPQTestCase(unittest.TestCase):
         self.assertEqual(actual_res['b'].nonzero().nvals, 2)
         self.assertEqual(actual_res['S'].nonzero().nvals, 6)
 
-
+    def test_epsilon_cfpq_tensors(self):
+        grammar, epsilon_set = Graph.recursive_automata_from_file(epsilon_tensors_grammar_path)
+        graph = Graph.from_file(graph_path)
+        actual_res = context_free_path_querying_tensors(grammar, epsilon_set, graph)
+        self.assertEqual(actual_res['a'].nonzero().nvals, 3)
+        self.assertEqual(actual_res['b'].nonzero().nvals, 2)
+        self.assertEqual(actual_res['S'].nonzero().nvals, 9)
 
 if __name__ == '__main__':
     unittest.main()

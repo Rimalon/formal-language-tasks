@@ -26,7 +26,7 @@ def prepare_script(script: str): return list(map(lambda c: Terminal(c), list(scr
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument('--script', required=True,
-                        type=str, help='path to file with script.\nthe file format format depends on your syntax')
+                        type=str, help='path to file with script.\nthe file format depends on your syntax')
     parser.add_argument('--syntax', required=False,
                         type=str, help='path to file with syntax.\nfile format(pyformlang.cfg format):\nString -> Char String\nChar -> a | b\n')
     args = parser.parse_args()

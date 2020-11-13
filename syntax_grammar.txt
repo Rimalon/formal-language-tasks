@@ -16,7 +16,7 @@ ObjectExpressionCollection -> f i l t e r e d _ e d g e s ( Condition , Blank Ob
 ObjectExpressionAggregated -> c o u n t ( ObjectExpressionCollection )
 Condition -> ( Condition )
 Condition -> ( String , Blank String , Blank String Blank = > Blank BooleanExpression )
-Condition -> UnaryBooleanOperator Condition
+Condition -> UnaryBooleanOperator Blank Condition
 Condition -> Condition Blank BinaryBooleanOperator Blank Condition
 BooleanExpression -> ( BooleanExpression )
 BooleanExpression -> i s _ s t a r t

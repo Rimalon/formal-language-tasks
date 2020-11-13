@@ -34,7 +34,7 @@ True BooleanExpression is_final or is_start
 True BooleanExpression is_final and is_start
 True BooleanExpression (is_final and is_start) or is_final
 True BooleanExpression (is_final and is_start) and test == test
-True Condition (not(not(adf, qersd, wtfds => is_start)))
+True Condition (not (not (adf, qersd, wtfds => is_start)))
 True Condition ((adf, qersd, wtfds => is_start) or (adf, qersd, wtfds => is_start))
 True Condition ((adf, qersd, wtfds => is_start) and (adf, qersd, wtfds => is_start))
-True Condition not(((adf, qersd, wtfds => is_start) and (adf, qersd, wtfds => is_start)))
+True Condition not (((adf, qersd, wtfds => is_start) and (adf, qersd, wtfds => is_start)))

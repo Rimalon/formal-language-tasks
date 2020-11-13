@@ -1,0 +1,4 @@
+connect aasdfsatgrewhbsrhtdfbtdytsd;
+select edges from gsafdfds;
+create_named_pattern(adsfasd,((a)*)(b+));
+select filtered_edges((adf, qersd, wtfds => is_start), filtered_edges((adf, qersd, wtfds => is_start), edges)) from intersect(grasdf, gfsdf);

@@ -1,0 +1,21 @@
+Script -> Statement
+Script -> Statement Script
+Statement -> c o n n e c t Blank String ;
+Statement -> s e l e c t Blank ObjectExpression Blank f r o m  Blank GraphExpression ;
+GraphExpression -> i n t e r s e c t ( GraphExpression , Blank GraphExpression )
+GraphExpression -> q u e r y ( Pattern )
+GraphExpression -> String
+ObjectExpression -> ObjectExpressionAggregated | ObjectExpressionCollection
+ObjectExpressionCollection -> e d g e s
+ObjectExpressionAggregated -> c o u n t ( ObjectExpressionCollection )
+Pattern -> ( Pattern )
+Pattern -> ( Pattern ) ( Pattern )
+Pattern -> String
+Pattern -> Pattern *
+Pattern -> Pattern +
+Pattern -> Pattern ?
+Pattern -> Pattern Blank o r Blank Pattern
+String -> Char
+String -> Char String
+Char -> a | b | c | d | e | f | g | h | i | j | k | l | m | n | o | p | q | r | s | t | u | v | w | x | y | z
+Blank -> #

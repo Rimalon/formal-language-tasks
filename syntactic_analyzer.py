@@ -3,10 +3,7 @@ from pyformlang.cfg import Terminal, CFG, Variable
 from src.classes.CNF import CNF
 from src.main.CYK import cyk
 
-syntax_grammar_path = '/home/rimalon/Desktop/formal-language-tasks/syntax_grammar.txt'
-
-
-def check_syntax(script_path: str):
+def check_syntax(syntax_grammar_path:str, script_path: str):
     file = open(script_path)
     script_content = prepare_script(file.read())
     file.close()

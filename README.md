@@ -21,12 +21,12 @@ Observing the described rules and correctly substituting the right parts, you wi
 #main expressions:
 Script - text with one Statement on each line
 Statement -> connect String;
-Statement -> create_named_pattern(String, Pattern);
+Statement -> create_named_pattern(String, Pattern); #add new production to grammar
 Statement -> select Object from Graph;
 Graph -> intersect(Graph, Graph)
 Graph -> query(Pattern)
 Graph -> set_start_and_final(Vertices, Vertices, Graph)
-Graph -> String
+Graph -> String #path to file with graph
 Vertices -> range(Int, Int)
 Vertices -> { IntList }
 Vertices -> none
@@ -37,6 +37,7 @@ ObjectAggregated -> count(ObjectCollection)
 
 #auxiliary expressions:
 Pattern - regex string. 
+Pattern -> String
 Pattern -> Pattern+
 Pattern -> Pattern*
 Pattern -> Pattern?

@@ -16,11 +16,11 @@ False Vertices { 1, 1f0, 2 }
 True Vertices none
 False Vertices asd
 True ObjectExpression edges
-True ObjectExpression filtered_edges((adf, qersd, wtfds => is_start), edges)
-True ObjectExpression filtered_edges((adf, qersd, wtfds => is_start), filtered_edges((adf, qersd, wtfds => is_start), edges))
+True ObjectExpression filtered_edges((adf, qersd, wtfds => is_start(adf)), edges)
+True ObjectExpression filtered_edges((adf, qersd, wtfds => is_start(adf)), filtered_edges((adf, qersd, wtfds => is_start(adf)), edges))
 True ObjectExpression count(edges)
-True ObjectExpression count(filtered_edges((adf, qersd, wtfds => is_start), edges))
-True Condition (adf, qersd, wtfds => is_start)
+True ObjectExpression count(filtered_edges((adf, qersd, wtfds => is_start(adf)), edges))
+True Condition (adf, qersd, wtfds => is_start(adf))
 True Pattern ((a)*)(b or c)
 True Pattern (afasd)*
 True Pattern (afasd)+
@@ -28,13 +28,15 @@ True Pattern (afa)((sd)*)
 True Pattern (af?)(asd*)
 True Pattern term(sdfas)
 True Pattern nonterm(dsfgas)
-True BooleanExpression is_start
-True BooleanExpression is_final
-True BooleanExpression is_final or is_start
-True BooleanExpression is_final and is_start
-True BooleanExpression (is_final and is_start) or is_final
-True BooleanExpression (is_final and is_start) and test == test
-True Condition (not (not (adf, qersd, wtfds => is_start)))
-True Condition ((adf, qersd, wtfds => is_start) or (adf, qersd, wtfds => is_start))
-True Condition ((adf, qersd, wtfds => is_start) and (adf, qersd, wtfds => is_start))
-True Condition not (((adf, qersd, wtfds => is_start) and (adf, qersd, wtfds => is_start)))
+True Pattern (afasd)* or (afa)((sd)*)
+True Pattern (afasd)+ or (af?)(asd*) or ((a)*)(b or c)
+True BooleanExpression is_start(adf)
+True BooleanExpression is_final(11)
+True BooleanExpression is_final(11) or is_start(adf)
+True BooleanExpression is_final(11) and is_start(adf)
+True BooleanExpression (is_final(11) and is_start(adf)) or is_final(11)
+True BooleanExpression (is_final(11) and is_start(adf)) and test == test
+True Condition (not (not (adf, qersd, wtfds => is_start(adf))))
+True Condition ((adf, qersd, wtfds => is_start(adf)) or (adf, qersd, wtfds => is_start(adf)))
+True Condition ((adf, qersd, wtfds => is_start(adf)) and (adf, qersd, wtfds => is_start(adf)))
+True Condition not (((adf, qersd, wtfds => is_start(adf)) and (adf, qersd, wtfds => is_start(adf))))

@@ -19,8 +19,8 @@ Condition -> ( String , Blank String , Blank String Blank = > Blank BooleanExpre
 Condition -> UnaryBooleanOperator Blank Condition
 Condition -> Condition Blank BinaryBooleanOperator Blank Condition
 BooleanExpression -> ( BooleanExpression )
-BooleanExpression -> i s _ s t a r t
-BooleanExpression -> i s _ f i n a l
+BooleanExpression -> i s _ s t a r t ( String )
+BooleanExpression -> i s _ f i n a l ( String )
 BooleanExpression -> BooleanExpression Blank BinaryBooleanOperator Blank BooleanExpression
 BooleanExpression -> UnaryBooleanOperator Blank BooleanExpression
 BooleanExpression -> String Blank = = Blank String
@@ -30,7 +30,9 @@ Pattern -> String
 Pattern -> Pattern *
 Pattern -> Pattern +
 Pattern -> Pattern ?
-Pattern -> Pattern Blank o r Blank Pattern
+Pattern -> OrPattern
+OrPattern -> Pattern
+OrPattern -> Pattern Blank o r Blank OrPattern
 Pattern -> t e r m ( String )
 Pattern -> n o n t e r m ( String )
 BinaryBooleanOperator -> o r
@@ -38,6 +40,8 @@ BinaryBooleanOperator -> a n d
 UnaryBooleanOperator -> n o t
 String -> Char
 String -> Char String
+String -> Number
+String -> Number String
 Char -> a | b | c | d | e | f | g | h | i | j | k | l | m | n | o | p | q | r | s | t | u | v | w | x | y | z
 IntList -> Int
 IntList -> Int , Blank IntList

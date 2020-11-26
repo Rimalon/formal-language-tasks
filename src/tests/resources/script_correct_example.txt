@@ -1,2 +1,1 @@
-connect aasdfsatgrewhbsrhtdfbtdytsd;
-select filtered_edges((adf, qersd, wtfds => is_start), filtered_edges((adf, qersd, wtfds => is_start), edges)) from intersect(grasdf, gfsdf);
+select filtered_edges((adf, qersd, wtfds => is_start(qersd)), filtered_edges((adf, qersd, wtfds => is_start(adf)), edges)) from intersect(grasdf, gfsdf);

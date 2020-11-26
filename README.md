@@ -51,14 +51,14 @@ Condition -> Condition or Condition
 Condition -> Condition and Condition
 Condition -> not Boolean
 Condition -> (Condition)
-Boolean -> is_start
-Boolean -> is_final
+Boolean -> is_start(String)
+Boolean -> is_final(String)
 Boolean -> String == String
 Boolean -> Boolean or Boolean
 Boolean -> Boolean and Boolean
 Boolean -> not Boolean
 Boolean -> (Boolean)
-String - string of lowercase letters
+String - string of lowercase letters or numbers
 Int - numeric value
 IntList - comma separated list of Int
 ```
@@ -75,7 +75,7 @@ IntList - comma separated list of Int
 ```
 connect somedatabase;
 create_named_pattern(astar, (a)*);
-select filtered_edges((u, e, v => is_final), filtered_edges((u, e, v => e == b), edges)) from intersect(firstgraph, secondgraph);
+select filtered_edges((u, e, v => is_final(u)), filtered_edges((u, e, v => e == b), edges)) from intersect(firstgraph, secondgraph);
 ```
 #### Statement:
 ```

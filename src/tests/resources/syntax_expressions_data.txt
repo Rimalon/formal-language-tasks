@@ -1,0 +1,42 @@
+True Statement connect asdfasdfasd;
+False Statement connec adsfasdf;
+True Statement create_named_pattern(wearfsdewr, (a)*);
+True Statement create_named_pattern(wearfsdewr, ((a)+)(b));
+False Statement create_naed_pattern(wearfsdewr, (a)*);
+True Statement select edges from graph;
+False Statement select edgs from graph;
+True GraphExpression intersect(graph, graph)
+True GraphExpression query(asdg)
+True GraphExpression set_start_and_final({ 1, 10, 2 }, range(1, 10), graph)
+True GraphExpression set_start_and_final(none, { 0 }, graph)
+False GraphExpression set_stat_and_final({ 1, 10, 2 }, {0}, graph)
+True Vertices range(1, 20)
+False Vertices range(1, 2f0)
+False Vertices { 1, 1f0, 2 }
+True Vertices none
+False Vertices asd
+True ObjectExpression edges
+True ObjectExpression filtered_edges((adf, qersd, wtfds => is_start(adf)), edges)
+True ObjectExpression filtered_edges((adf, qersd, wtfds => is_start(adf)), filtered_edges((adf, qersd, wtfds => is_start(adf)), edges))
+True ObjectExpression count(edges)
+True ObjectExpression count(filtered_edges((adf, qersd, wtfds => is_start(adf)), edges))
+True Condition (adf, qersd, wtfds => is_start(adf))
+True Pattern ((a)*)(b or c)
+True Pattern (afasd)*
+True Pattern (afasd)+
+True Pattern (afa)((sd)*)
+True Pattern (af?)(asd*)
+True Pattern term(sdfas)
+True Pattern nonterm(dsfgas)
+True Pattern (afasd)* or (afa)((sd)*)
+True Pattern (afasd)+ or (af?)(asd*) or ((a)*)(b or c)
+True BooleanExpression is_start(adf)
+True BooleanExpression is_final(11)
+True BooleanExpression is_final(11) or is_start(adf)
+True BooleanExpression is_final(11) and is_start(adf)
+True BooleanExpression (is_final(11) and is_start(adf)) or is_final(11)
+True BooleanExpression (is_final(11) and is_start(adf)) and test == test
+True Condition (not (not (adf, qersd, wtfds => is_start(adf))))
+True Condition ((adf, qersd, wtfds => is_start(adf)) or (adf, qersd, wtfds => is_start(adf)))
+True Condition ((adf, qersd, wtfds => is_start(adf)) and (adf, qersd, wtfds => is_start(adf)))
+True Condition not (((adf, qersd, wtfds => is_start(adf)) and (adf, qersd, wtfds => is_start(adf))))

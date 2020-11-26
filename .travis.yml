@@ -22,3 +22,4 @@ jobs:
       - python -m unittest -v src.tests.paths_query_executor_test
       - python -m unittest -v src.tests.cyk_test
       - python -m unittest -v src.tests.cfpq_test
+      - python -m unittest -v src.tests.syntax_check_test

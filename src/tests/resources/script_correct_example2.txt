@@ -1,0 +1,2 @@
+select edges from gsafdfds;
+create_named_pattern(adsfasd, ((a)*)(b+));
